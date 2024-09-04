@@ -11,6 +11,8 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-install pdo pdo_mysql
 # RUN docker-php-ext-install pdo pdo_mysql zip
 
+COPY . /var/www/html/E_Global_Zone
+
 # Install composer
 RUN apk add --no-cache curl \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -20,7 +22,7 @@ RUN chmod +x /wait-for-it.sh
 
 # Install dependencies
 COPY composer.json composer.lock ./
-RUN composer install --no-autoloader --no-scripts
+RUN composer install 
 
 # Copy entrypoint script and give execution rights
 COPY entrypoint.sh /entrypoint.sh
